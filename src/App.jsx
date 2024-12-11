@@ -10,8 +10,9 @@ export default function App() {
         <Routes>
             <Route path="/" element={<DashboardLayout />}>
                 <Route index element={<HomeDashboard />} />
-                <Route path="create-product" element={<CreateProduct />} />
                 <Route path="create-category" element={<CreateCategory />} />
+                <Route path="edit-category/:id" element={<CreateCategory />} />
+                <Route path="create-product" element={<CreateProduct />} />
 
                 {/* Error Route */}
                 <Route path="/*" element={<Error />} />

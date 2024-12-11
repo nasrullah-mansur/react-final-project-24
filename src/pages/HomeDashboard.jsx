@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/products/productsSlice";
+import { getCategories } from "../features/categories/categorySlice";
+import { Link } from "react-router";
 
 export default function HomeDashboard() {
-    const data = useSelector((state) => state.products);
+    const categoriesData = useSelector((state) => state.categories);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProducts());
+        dispatch(getCategories());
     }, []);
-
-    console.log(data);
 
     const categories = [
         { name: "Toys", image: "https://via.placeholder.com/150" },
@@ -67,6 +66,61 @@ export default function HomeDashboard() {
         },
     ];
 
+    let categoriesSectionContent;
+
+    if (categoriesData.isLoading) {
+        categoriesSectionContent = (
+            <div className="text-xl">Data is loading ...</div>
+        );
+    }
+
+    if (!categoriesData.isLoading && categoriesData.isError) {
+        categoriesSectionContent = (
+            <div className="text-xl">Error || {categoriesData.error}</div>
+        );
+    }
+
+    if (
+        !categoriesData.isLoading &&
+        !categoriesData.isError &&
+        categoriesData.categories.length === 0
+    ) {
+        categoriesSectionContent = (
+            <div className="text-xl">No category found</div>
+        );
+    }
+
+    if (
+        !categoriesData.isLoading &&
+        !categoriesData.isError &&
+        categoriesData.categories.length > 0
+    ) {
+        categoriesSectionContent = categoriesData.categories.map((category) => (
+            <div
+                key={category.id}
+                className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center w-full"
+            >
+                <img
+                    src={category.categoryImageUrl}
+                    alt={category.categoryName}
+                    className="w-24 h-24 object-cover mb-3"
+                />
+                <p className="text-lg font-semibold">{category.categoryName}</p>
+                <div className="flex justify-between mt-4">
+                    <Link
+                        to={`/edit-category/${category.id}`}
+                        className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                    >
+                        Edit
+                    </Link>
+                    <button className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        ));
+    }
+
     return (
         <div>
             <section className="py-8 bg-gray-50">
@@ -75,21 +129,7 @@ export default function HomeDashboard() {
                         Categories
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                        {categories.map((category, index) => (
-                            <div
-                                key={index}
-                                className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center"
-                            >
-                                <img
-                                    src={category.image}
-                                    alt={category.name}
-                                    className="w-24 h-24 object-cover mb-3"
-                                />
-                                <p className="text-lg font-semibold">
-                                    {category.name}
-                                </p>
-                            </div>
-                        ))}
+                        {categoriesSectionContent}
                     </div>
                 </div>
             </section>
