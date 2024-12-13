@@ -37,7 +37,7 @@ export default function CreateCategory() {
             setDataToFirebase("categories", data);
             toast.success("Creation is successful");
         }
-        navigate(-1);
+        navigate("/");
     };
 
     useEffect(() => {

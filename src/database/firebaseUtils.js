@@ -1,4 +1,11 @@
-import { getDatabase, ref, onValue, push, set } from "firebase/database";
+import {
+    getDatabase,
+    ref,
+    onValue,
+    push,
+    set,
+    remove,
+} from "firebase/database";
 import app from "./firebaseConfig";
 
 const db = getDatabase(app);
@@ -49,4 +56,15 @@ export const setDataToFirebase = (tableName, data) => {
 // Write/Set/Push data to database;
 export const updateDataFromFirebase = (tableName, data) => {
     set(ref(db, tableName), data);
+};
+
+// Remove data from firebase;
+export const removeDataFromFirebase = (tableName) => {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve(remove(ref(db, tableName)));
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
