@@ -1,15 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import { categoryFormSchema } from "../validation/validationSchema";
+import { categoryFormSchema } from "../../../validation/validationSchema";
+
+import { useNavigate, useParams } from "react-router";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import {
     getFirebaseDataForEdit,
     setDataToFirebase,
     updateDataFromFirebase,
-} from "../database/firebaseUtils";
-import { useNavigate, useParams } from "react-router";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+} from "../../../database/firebaseUtils";
 
 export default function CreateCategory() {
     const navigate = useNavigate();

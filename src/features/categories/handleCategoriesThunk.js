@@ -17,7 +17,6 @@ const handleAsyncThunk = (builder, asyncThunk, stateKey = "posts") => {
 
                 state.categories.splice(categoryIndex, 1);
             }
-            console.log(action);
         })
         .addCase(asyncThunk.rejected, (state, action) => {
             state.isLoading = false;

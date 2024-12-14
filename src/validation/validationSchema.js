@@ -6,3 +6,11 @@ export const categoryFormSchema = yup
         categoryImageUrl: yup.string().required().url(),
     })
     .required();
+
+export const productFormSchema = yup
+    .object({
+        productName: yup.string().required(),
+        productPrice: yup.number().required(),
+        productImageUrl: yup.string().required().url(),
+    })
+    .required();
