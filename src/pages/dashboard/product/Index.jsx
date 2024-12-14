@@ -63,7 +63,9 @@ export default function CreateProduct() {
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-gray-100 shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold mb-4 text-center">Add Product</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">
+                {params.id ? "Edit Product" : "Add Product"}
+            </h2>
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                 {/* Product Name */}
                 <div>
@@ -142,7 +144,7 @@ export default function CreateProduct() {
                     type="submit"
                     className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
                 >
-                    Submit
+                    {params.id ? "Update" : "Save"}
                 </button>
             </form>
         </div>
