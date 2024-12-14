@@ -3,11 +3,18 @@ import { productFormSchema } from "../../../validation/validationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { setProducts } from "../../../features/products/productsSlice";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
+import {
+    getFirebaseDataForEdit,
+    updateDataFromFirebase,
+} from "../../../database/firebaseUtils";
+import { useEffect } from "react";
 
 export default function CreateProduct() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const params = useParams();
 
     const {
         register,
@@ -24,11 +31,35 @@ export default function CreateProduct() {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
-        dispatch(setProducts(data));
+        if (params.id) {
+            // Update product;
+            updateDataFromFirebase(`products/${params.id}`, data);
+            toast.success("Update is successful");
+        } else {
+            // Create product;
+            dispatch(setProducts(data));
+        }
+
         reset();
         navigate("/");
     };
+
+    useEffect(() => {
+        async function getData() {
+            let res = await getFirebaseDataForEdit("products/" + params.id);
+            reset(res);
+        }
+
+        if (params.id) {
+            getData();
+        } else {
+            reset({
+                productName: "",
+                productPrice: "",
+                productImageUrl: "",
+            });
+        }
+    }, [params]);
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-gray-100 shadow-md rounded-lg">
