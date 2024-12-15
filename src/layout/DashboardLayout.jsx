@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router";
-import { ToastContainer } from "react-toastify";
+import Avatar from "react-avatar";
 
 export default function DashboardLayout() {
+    const authUser = useSelector((store) => store.auth);
+
     return (
         <>
             <header className="bg-white shadow-md py-4">
@@ -26,12 +29,18 @@ export default function DashboardLayout() {
                         >
                             Create new Category
                         </Link>
+                        <button className="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 transition">
+                            Logout
+                        </button>
                     </div>
                 </div>
             </header>
+            <h1 className="text-4xl py-5 text-center">
+                <Avatar name={authUser.user.name} round={true} />
+                {authUser.user.name}
+            </h1>
             <div className="py-5">
                 <Outlet />
-                <ToastContainer />
             </div>
         </>
     );
