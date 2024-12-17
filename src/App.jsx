@@ -3,11 +3,12 @@ import DashboardLayout from "./layout/DashboardLayout";
 import Error from "./Error";
 
 import HomeDashboard from "./pages/dashboard/home/Index";
-import CreateCategory from "./pages/dashboard/category/Index";
+import CreateCategory from "./pages/dashboard/category/Create";
 import CreateProduct from "./pages/dashboard/product/Index";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Private from "./pages/auth/Private";
+import IndexCategory from "./pages/dashboard/category/Index";
 
 export default function App() {
     return (
@@ -19,6 +20,9 @@ export default function App() {
             <Route element={<Private />}>
                 <Route path="dashboard" element={<DashboardLayout />}>
                     <Route index element={<HomeDashboard />} />
+
+                    {/* ============ Category ================= */}
+                    <Route path="index-category" element={<IndexCategory />} />
                     <Route
                         path="create-category"
                         element={<CreateCategory />}
@@ -27,6 +31,8 @@ export default function App() {
                         path="edit-category/:id"
                         element={<CreateCategory />}
                     />
+
+                    {/* ============ Product ================= */}
                     <Route path="create-product" element={<CreateProduct />} />
                     <Route
                         path="edit-product/:id"
@@ -40,3 +46,7 @@ export default function App() {
         </Routes>
     );
 }
+
+// catetory/index
+// category/create
+// category/edit/:id
