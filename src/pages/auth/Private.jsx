@@ -15,4 +15,6 @@ export default function Private() {
     if (authUser.isLogin && authUser.user.role == "admin") {
         return <Outlet />;
     }
+
+    // return <Outlet />;
 }

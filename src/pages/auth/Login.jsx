@@ -52,17 +52,30 @@ const Login = () => {
             const newUser = {
                 id: user.uid,
                 name: user.displayName,
-                role: "user",
+                email: user.email,
             };
 
-            dispatch(
-                setLoginUserDataToRedux({
-                    ...newUser,
-                    email: user.email,
-                })
-            );
+            const userProfile = await getProfile(user.uid);
 
-            createUserProfile(newUser);
+            if (!userProfile || userProfile.email != user.email) {
+                // Create a new user;
+                createUserProfile(newUser);
+                dispatch(
+                    setLoginUserDataToRedux({
+                        ...newUser,
+                        role: "user",
+                    })
+                );
+            } else {
+                // Just set user information to redux;
+                dispatch(
+                    setLoginUserDataToRedux({
+                        ...newUser,
+                        role: userProfile.role,
+                    })
+                );
+            }
+
             toast.success("You are logged in");
             navigate("/dashboard");
         } catch (error) {

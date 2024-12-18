@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Table from "../../../component/Table";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import {
-    deleteCategory,
-    getCategories,
-} from "../../../features/categories/categorySlice";
+
 import { removeDataFromFirebase } from "../../../database/firebaseUtils";
 import Modal from "../../../component/Modal";
 
@@ -31,7 +28,7 @@ export default function IndexCategory() {
                 const del = await removeDataFromFirebase(
                     "categories/" + deleteCategoryId
                 );
-                dispatch(deleteCategory(deleteCategoryId));
+                // dispatch(deleteCategory(deleteCategoryId));
             }
             deleteCat();
             setDeleteCategoryId(false);
@@ -39,7 +36,7 @@ export default function IndexCategory() {
     };
 
     useEffect(() => {
-        dispatch(getCategories());
+        // dispatch(getCategories());
     }, []);
 
     return (

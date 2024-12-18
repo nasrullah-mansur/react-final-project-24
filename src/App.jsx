@@ -4,11 +4,12 @@ import Error from "./Error";
 
 import HomeDashboard from "./pages/dashboard/home/Index";
 import CreateCategory from "./pages/dashboard/category/Create";
-import CreateProduct from "./pages/dashboard/product/Index";
+import CreateProduct from "./pages/dashboard/product/Create";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Private from "./pages/auth/Private";
 import IndexCategory from "./pages/dashboard/category/Index";
+import IndexProduct from "./pages/dashboard/product/Index";
 
 export default function App() {
     return (
@@ -33,6 +34,7 @@ export default function App() {
                     />
 
                     {/* ============ Product ================= */}
+                    <Route path="index-product" element={<IndexProduct />} />
                     <Route path="create-product" element={<CreateProduct />} />
                     <Route
                         path="edit-product/:id"
