@@ -10,10 +10,16 @@ import Register from "./pages/auth/Register";
 import Private from "./pages/auth/Private";
 import IndexCategory from "./pages/dashboard/category/Index";
 import IndexProduct from "./pages/dashboard/product/Index";
+import HomeLayout from "./layout/HomeLayout";
+import HomeIndex from "./pages/frontEnd/home/Index";
 
 export default function App() {
     return (
         <Routes>
+            <Route path="/" element={<HomeLayout />}>
+                <Route index element={<HomeIndex />} />
+            </Route>
+
             {/* Auth Route */}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
