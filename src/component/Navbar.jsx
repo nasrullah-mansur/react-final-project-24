@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router";
+
 const Navbar = () => {
+    const navigate = useNavigate();
     return (
         <header className="bg-blue-900 text-white">
             <div className="container mx-auto flex justify-between items-center py-2 px-4">
@@ -18,7 +21,10 @@ const Navbar = () => {
             <div className="bg-white shadow">
                 <div className="container mx-auto flex justify-between items-center py-4 px-4">
                     <div className="flex items-center">
-                        <h1 className="text-red-500 font-bold text-lg">
+                        <h1
+                            onClick={() => navigate("/")}
+                            className="text-red-500 font-bold text-lg cursor-pointer"
+                        >
                             divineshop
                         </h1>
                     </div>

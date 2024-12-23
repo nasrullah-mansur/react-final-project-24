@@ -12,12 +12,17 @@ import IndexCategory from "./pages/dashboard/category/Index";
 import IndexProduct from "./pages/dashboard/product/Index";
 import HomeLayout from "./layout/HomeLayout";
 import HomeIndex from "./pages/frontEnd/home/Index";
+import SingleProductIndex from "./pages/frontEnd/product/Index";
 
 export default function App() {
     return (
         <Routes>
             <Route path="/" element={<HomeLayout />}>
                 <Route index element={<HomeIndex />} />
+                <Route
+                    path="single-product/:id"
+                    element={<SingleProductIndex />}
+                />
             </Route>
 
             {/* Auth Route */}

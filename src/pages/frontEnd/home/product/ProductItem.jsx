@@ -1,8 +1,31 @@
 import React from "react";
+import Popup from "./Popup";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
-export default function ProductItem({ product }) {
-    const { id, productName, productPrice, productCategory, productImageUrl } =
-        product;
+export default function ProductItem({ product, onFavorite }) {
+    const {
+        id,
+        productName,
+        productPrice,
+        productCategory,
+        productImageUrl,
+        isFavorite,
+    } = product;
+
+    const [isPopup, setIsPopup] = useState(false);
+
+    const navigate = useNavigate();
+
+    const closeHandler = (e) => {
+        e.stopPropagation();
+        setIsPopup(false);
+    };
+
+    const handleClick = (e, id) => {
+        e.stopPropagation();
+        navigate(`/single-product/${id}`);
+    };
 
     let svg = (
         <svg
@@ -25,7 +48,7 @@ export default function ProductItem({ product }) {
     let stats = Array(count).fill(svg);
 
     return (
-        <div className="border bg-white">
+        <div className="border bg-white" onClick={() => setIsPopup(true)}>
             <img
                 className="w-full h-[160px] object-cover"
                 src={productImageUrl}
@@ -33,7 +56,12 @@ export default function ProductItem({ product }) {
             />
             <div className="flex w-full p-1">
                 <div className="w-full">
-                    <h3 className="font-bold mb-1">{productName}</h3>
+                    <h3
+                        onClick={(e) => handleClick(e, id)}
+                        className="font-bold mb-1 cursor-pointer"
+                    >
+                        {productName}
+                    </h3>
                     <span className="text-sm block mb-1">
                         {productCategory}
                     </span>
@@ -46,23 +74,40 @@ export default function ProductItem({ product }) {
                 </div>
 
                 <div className="w-[80px] flex flex-col justify-end mb-3 items-center">
-                    <svg
-                        className="w-6 h-6 text-red-600 dark:text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
-                        />
-                    </svg>
+                    {!isFavorite ? (
+                        <svg
+                            onClick={() => onFavorite(id)}
+                            className="cursor-pointer w-6 h-6 text-red-600 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+                            />
+                        </svg>
+                    ) : (
+                        <svg
+                            onClick={() => onFavorite(id)}
+                            className="cursor-pointer w-6 h-6 text-red-600 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                        </svg>
+                    )}
+
                     <svg
                         className="w-6 h-6 text-red-600 dark:text-white"
                         aria-hidden="true"
@@ -82,6 +127,14 @@ export default function ProductItem({ product }) {
                     </svg>
                 </div>
             </div>
+
+            {isPopup && (
+                <Popup
+                    onClose={closeHandler}
+                    onFavorite={() => onFavorite(id)}
+                    product={product}
+                />
+            )}
         </div>
     );
 }

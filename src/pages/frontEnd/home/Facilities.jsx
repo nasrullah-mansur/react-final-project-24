@@ -1,4 +1,3 @@
-import React from "react";
 import car from "../../../assets/car.png";
 import cart from "../../../assets/cart.png";
 import clock from "../../../assets/clock.png";
@@ -19,7 +18,7 @@ export default function Facilities() {
             </div>
             <div className="p-3 border">
                 <div className="flex items-center">
-                    <img src={car} alt="car" />
+                    <img src={cart} alt="car" />
                     <div className="ml-2">
                         <h4 className="text-lg font-bold ">Fast Delivery</h4>
                         <span className="text-[#7D879C]">Start from $10</span>
@@ -28,7 +27,7 @@ export default function Facilities() {
             </div>
             <div className="p-3 border">
                 <div className="flex items-center">
-                    <img src={car} alt="car" />
+                    <img src={clock} alt="car" />
                     <div className="ml-2">
                         <h4 className="text-lg font-bold ">Fast Delivery</h4>
                         <span className="text-[#7D879C]">Start from $10</span>
@@ -37,7 +36,7 @@ export default function Facilities() {
             </div>
             <div className="p-3 border">
                 <div className="flex items-center">
-                    <img src={car} alt="car" />
+                    <img src={bank} alt="car" />
                     <div className="ml-2">
                         <h4 className="text-lg font-bold ">Fast Delivery</h4>
                         <span className="text-[#7D879C]">Start from $10</span>
@@ -46,7 +45,7 @@ export default function Facilities() {
             </div>
             <div className="p-3 border">
                 <div className="flex items-center">
-                    <img src={car} alt="car" />
+                    <img src={support} alt="car" />
                     <div className="ml-2">
                         <h4 className="text-lg font-bold ">Fast Delivery</h4>
                         <span className="text-[#7D879C]">Start from $10</span>
