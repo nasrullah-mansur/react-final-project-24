@@ -10,7 +10,7 @@ export default function Private() {
     }
 
     if (authUser.isLogin && authUser.user.role != "admin") {
-        navigate("/");
+        return <Navigate to={"/"} />;
     }
 
     if (authUser.isLogin && authUser.user.role == "admin") {

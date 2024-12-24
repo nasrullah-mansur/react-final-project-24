@@ -13,6 +13,7 @@ import IndexProduct from "./pages/dashboard/product/Index";
 import HomeLayout from "./layout/HomeLayout";
 import HomeIndex from "./pages/frontEnd/home/Index";
 import SingleProductIndex from "./pages/frontEnd/product/Index";
+import CartDetails from "./pages/frontEnd/cartDetails/CartDetails";
 
 export default function App() {
     return (
@@ -23,6 +24,7 @@ export default function App() {
                     path="single-product/:id"
                     element={<SingleProductIndex />}
                 />
+                <Route path="cart-details" element={<CartDetails />} />
             </Route>
 
             {/* Auth Route */}

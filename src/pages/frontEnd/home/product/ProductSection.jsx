@@ -13,7 +13,7 @@ export default function ProductSection() {
 
         return {
             ...item,
-            productCategory: findCat.categoryName,
+            productCategory: findCat ? findCat?.categoryName : "not available",
         };
     });
 

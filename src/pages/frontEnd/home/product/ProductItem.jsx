@@ -1,9 +1,18 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+
 import Popup from "./Popup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { db, setProductToCart } from "../../../../database/firebaseUtils";
+import { onValue, ref } from "firebase/database";
+import { getCarts } from "../../../../features/cart/cartSlice";
 
 export default function ProductItem({ product, onFavorite }) {
+    const { user } = useSelector((store) => store.auth);
+
+    const { carts } = useSelector((store) => store.carts);
+
     const {
         id,
         productName,
@@ -12,6 +21,8 @@ export default function ProductItem({ product, onFavorite }) {
         productImageUrl,
         isFavorite,
     } = product;
+
+    const activeCart = carts.find((cart) => cart.productId == id);
 
     const [isPopup, setIsPopup] = useState(false);
 
@@ -46,6 +57,19 @@ export default function ProductItem({ product, onFavorite }) {
     );
     let count = 5;
     let stats = Array(count).fill(svg);
+
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        if (user) {
+            setProductToCart({
+                userId: user.id,
+                productId: id,
+                quantity: 1,
+            });
+        } else {
+            navigate("/login");
+        }
+    };
 
     return (
         <div className="border bg-white" onClick={() => setIsPopup(true)}>
@@ -108,23 +132,29 @@ export default function ProductItem({ product, onFavorite }) {
                         </svg>
                     )}
 
-                    <svg
-                        className="w-6 h-6 text-red-600 dark:text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
+                    <button
+                        onClick={handleAddToCart}
+                        disabled={activeCart ? true : false}
+                        className="bg-red-600 rounded text-white py-2 px-2 inline-block mt-2 disabled:bg-red-200"
                     >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 12h14m-7 7V5"
-                        />
-                    </svg>
+                        <svg
+                            className="w-6 h-6 text-white dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+                            />
+                        </svg>
+                    </button>
                 </div>
             </div>
 

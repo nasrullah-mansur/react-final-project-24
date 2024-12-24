@@ -35,7 +35,7 @@ export default function SingleProductIndex() {
             <div className="container mx-auto h-screen flex items-center gap-4">
                 <div className="w-1/2">
                     <img
-                        className="w-full object-cover"
+                        className="w-[320px] ml-auto object-cover"
                         src={productImageUrl}
                         alt={productName}
                     />
