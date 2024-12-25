@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import SingleCartList from "./SingleCartList";
+import { ref, remove } from "firebase/database";
+import { db } from "../../../database/firebaseUtils";
+import { toast } from "react-toastify";
 
 export default function CartDetails() {
     const { user } = useSelector((store) => store.auth);
@@ -22,12 +25,17 @@ export default function CartDetails() {
     });
 
     let totalPrice = updateCarts.reduce((total, cart) => {
-        return total + cart.productPrice;
+        return total + cart.productPrice * cart.quantity;
     }, 0);
 
     if (!user) {
         return <Navigate to={"/login"} />;
     }
+
+    const handleClick = () => {
+        remove(ref(db, `carts/${user.id}`));
+        toast.success("Product removed from cart");
+    };
 
     return (
         <div className="max-w-md mx-auto py-6">
@@ -39,7 +47,10 @@ export default function CartDetails() {
                     <SingleCartList key={cart.cartId} cart={cart} />
                 ))}
             </ul>
-            <button className="inline-block px-6 py-2 bg-red-600 text-white mt-6 mb-6 mx-auto">
+            <button
+                onClick={handleClick}
+                className="inline-block px-6 py-2 bg-red-600 text-white mt-6 mb-6 mx-auto"
+            >
                 Checkout Now and pay ${totalPrice}
             </button>
         </div>
